@@ -7,13 +7,22 @@ sasha can manipulate the dom.
 Simply call the # sasha
 
 sasha.response({
+
             meth:'' // http methods POST/GET,
+            
             url:"" // path to the server url,
+            
             query:"" // query strings,
+            
             success:function(){
+            
                 if(sasha.state(this)){
+                
                     var result = JSON.parse(this.response);
+                    
                     // how to use your result
+                    
                     }
             }
+            
 });
