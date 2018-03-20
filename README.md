@@ -6,7 +6,9 @@ sasha can manipulate the dom.
 # How to use this library
 Simply call the # sasha
 
-sasha.response({
+
+<code>
+            sasha.response({
 
             meth:'' // http methods POST/GET,
             
@@ -26,3 +28,5 @@ sasha.response({
             }
             
 });
+
+</code>
