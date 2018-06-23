@@ -137,20 +137,20 @@ sasha.prototype.onOpen = function (objs)
         dataString = data;
 
     if(this.supported() === "sse"){
-        obj = this.onConnect(urls+"/?"+dataString);
+        obj = this.onConnect(urls+"?"+dataString);
         con = obj.con;
         type = obj.type,
         connetion = con,
         url = urls;
     }else{
         if (meth === "GET" || meth === "get"){
-            obj = this.onConnect(urls+"/?"+dataString);
+            obj = this.onConnect(urls+"?"+dataString);
             con = obj.con;
             type = obj.type,
             connetion = con,
             url = urls;
         }else{
-            obj = this.onConnect(urls+"/");
+            obj = this.onConnect(urls+"");
             con = obj.con;
             type = obj.type,
             connetion = con,
@@ -239,6 +239,7 @@ sasha.prototype.onMessage = function (objs)
     if(isConnected === 1){
 
        if (type === "sse"){
+
             connetion.onmessage = callback;
 
        }else if(type === "xhr"){
@@ -254,6 +255,22 @@ sasha.prototype.onMessage = function (objs)
         console.log("Connection Failed");
     }
 
+}
+
+sasha.prototype.data = function(obj){
+    if(typeof obj != 'undefined'){
+        if(typeof obj.type != 'undefined' && typeof obj.data != 'undefined' && obj.type === 'json'){
+            return JSON.parse(obj.data.data);
+        }else{
+            if(typeof obj.data != 'undefined'){
+                return obj.data;
+            }else{
+                throw console.warn("Error::: data is require");
+            }
+        }
+    }else{
+        throw console.warn("Error::: object is not defined");
+    }
 }
 
 // show the response to the client
@@ -283,6 +300,19 @@ sasha.prototype.connect = function (meth,url)
     xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 
     return xhr;
+}
+
+
+sasha.prototype.cancel = function(arg){
+    var c = arg.cancelable = true;
+
+    if(c){
+        console.log("Conection cancel");
+    }else{
+        console.log("Failed to cancel the connection");
+    }
+
+    return c;
 }
 
 /**
@@ -372,4 +402,3 @@ sasha.prototype.send = function (con,query,method)
  * Test param: 'ms-body' this is message body,for displaying all messages
  */
 sasha = new sasha();
-
